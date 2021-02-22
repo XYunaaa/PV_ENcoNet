@@ -21,7 +21,7 @@ the state-of-the-art models on the KITTI public dataset.
 
 
 ## Evalution
-The table lists the detailed mean Average Precision (mAP) and FPS of some models for 3D detection task and its P-R curves of the evaluation results.
+The table lists the detailed mean Average Precision (mAP) and FPS of some models for 3D detection task and their P-R curves of the evaluation results.
 ![img](https://github.com/XYunaaa/PV_ENcoNet/blob/master/fig/res1.png)
 ![img](https://github.com/XYunaaa/PV_ENcoNet/blob/master/fig/PR-curve.png)
 
