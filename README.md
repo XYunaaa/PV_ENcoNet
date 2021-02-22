@@ -21,8 +21,9 @@ the state-of-the-art models on the KITTI public dataset.
 
 
 ## Evalution
-The table lists the detailed mean Average Precision (mAP) and FPS of some models for 3D detection task and their P-R curves of the evaluation results.
+The table lists the detailed mean Average Precision (mAP) and FPS of some models for 3D detection task.
 ![img](https://github.com/XYunaaa/PV_ENcoNet/blob/master/fig/res1.png)
+The following figure illustrates the Precise-Recall (PR) curves of these models when dealing with cars, pedestrians and cyclists. The PR curves describe the overall precision of each model.
 ![img](https://github.com/XYunaaa/PV_ENcoNet/blob/master/fig/PR-curve.png)
 
 ## Install
