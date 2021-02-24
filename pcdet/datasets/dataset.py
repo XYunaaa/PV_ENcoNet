@@ -65,7 +65,6 @@ def sample_points(points, coords, num_points):
             ##在所有点中 随机选择
             choice = np.arange(0, len(points), dtype=np.int32)
             choice = np.random.choice(choice, num_points, replace=False)
-        np.random.shuffle(choice)
     else:
         choice = np.arange(0, len(points), dtype=np.int32)
         if num_points > len(points):
@@ -74,8 +73,7 @@ def sample_points(points, coords, num_points):
             else:
                 extra_choice = np.random.choice(choice, num_points - len(points), replace=True)
             choice = np.concatenate((choice, extra_choice), axis=0)
-        np.random.shuffle(choice)
-
+    np.random.shuffle(choice)
     result = points[choice]
     coords_result = coords[choice]
     return result, coords_result
@@ -296,9 +294,7 @@ class DatasetTemplate(torch_data.Dataset):
                 if key in ['image']:
                     ret[key] = np.concatenate(val, axis=0)
                 elif key in ['points']:
-                    num = []
-                    for i, coor in enumerate(val):
-                        num.append(coor.shape[0])
+                    num = [coor.shape[0] for i, coor in enumerate(val)]
                     ## sample raw_points & voxels_feature
                     num_ = np.max(num)
                     coors_batch = []
@@ -312,9 +308,7 @@ class DatasetTemplate(torch_data.Dataset):
                 elif key in ['raw_points']:
                     if self.raw == False: # dont need load raw data
                         #print(self.nbg)
-                        num = []
-                        for i, coor in enumerate(val):
-                            num.append(coor.shape[0])
+                        num = [coor.shape[0] for i, coor in enumerate(val)]
                         ## sample raw_points
                         num_ = np.max(num)
                         coors_batch = []
@@ -336,7 +330,7 @@ class DatasetTemplate(torch_data.Dataset):
                         k = key + '_batch'
                         ret[k] = np.array(coors_batch).reshape((len(num), num_, -1)) # if colored,return have colored point cloud
                 elif key in ['gt_boxes']:
-                    max_gt = max([len(x) for x in val])
+                    max_gt = max(len(x) for x in val)
                     batch_gt_boxes3d = np.zeros((batch_size, max_gt, val[0].shape[-1]), dtype=np.float32)
                     for k in range(batch_size):
                         batch_gt_boxes3d[k, :val[k].__len__(), :] = val[k]
@@ -356,9 +350,7 @@ class DatasetTemplate(torch_data.Dataset):
 
         val = data_dict['voxel_features']
         voxel_coords = data_dict['voxel_coords']
-        num = []
-        for i, coor in enumerate(val):
-            num.append(coor.shape[0])
+        num = [coor.shape[0] for i, coor in enumerate(val)]
         num_ = np.max(num)
         fea = []
         cor = []
